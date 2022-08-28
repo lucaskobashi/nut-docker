@@ -3,6 +3,7 @@ FROM alpine
 # dependencies
 RUN apk add \
 		git \
+		jq \
 		gcc \
 		libusb \
 		python3 \
@@ -20,5 +21,7 @@ RUN git clone https://github.com/blawar/nut.git
 RUN pip3 install wheel
 RUN pip3 install -r ./nut/requirements.txt
 
+COPY ./entrypoint.sh /
+
 EXPOSE 9000
-CMD python3 /nut/nut.py -S >> /var/log/nut.log
+ENTRYPOINT sh entrypoint.sh
